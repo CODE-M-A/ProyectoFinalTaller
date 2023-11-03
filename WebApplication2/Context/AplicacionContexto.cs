@@ -11,5 +11,6 @@ namespace WebApplication2.Context
 
         public DbSet<Departamento> Departamento { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
+        public DbSet<Salario> Salario { get; set; }
     }
 }
