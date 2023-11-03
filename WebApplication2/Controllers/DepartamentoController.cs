@@ -43,7 +43,7 @@ namespace WebApplication2.Controllers
             _aplicacionContexto.SaveChanges();
             return Ok(departamento);
         }
-        //Delete: Eliminar estudiantes
+        //Delete: Eliminar Empleado
         [Route("/idDepartamento")]
         [HttpDelete]
         public IActionResult Delete(int departamentoID)
