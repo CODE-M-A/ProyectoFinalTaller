@@ -1,0 +1,64 @@
+BEGIN;
+
+
+CREATE TABLE IF NOT EXISTS public."Departamento"
+(
+    "idDepartamento" bigint NOT NULL,
+    "Nombre" text COLLATE pg_catalog."default",
+    "Area" text COLLATE pg_catalog."default",
+    CONSTRAINT "Departamento_pkey" PRIMARY KEY ("idDepartamento")
+);
+
+CREATE TABLE IF NOT EXISTS public."Empleado"
+(
+    "idEmpleado" bigint NOT NULL,
+    "Nombre" text COLLATE pg_catalog."default",
+    "Apellido" text COLLATE pg_catalog."default",
+    "Genero" boolean,
+    "FechaNacimiento" date,
+    "idDepartamento" bigint,
+    CONSTRAINT "Empleado_pkey" PRIMARY KEY ("idEmpleado")
+);
+
+CREATE TABLE IF NOT EXISTS public."Salario"
+(
+    "idSalario" bigint NOT NULL,
+    "Salario" bigint,
+    "FechaInicio" bigint,
+    CONSTRAINT "Salario_pkey" PRIMARY KEY ("idSalario")
+);
+
+CREATE TABLE IF NOT EXISTS public."Seguro"
+(
+    "idSeguro" bigint NOT NULL,
+    "Tipo" text COLLATE pg_catalog."default",
+    "Importe" bigint,
+    "FechaImporte" bigint,
+    CONSTRAINT "Seguro_pkey" PRIMARY KEY ("idSeguro")
+);
+
+CREATE TABLE IF NOT EXISTS public."Titulo"
+(
+    "idTitulo" bigint NOT NULL,
+    "Titulo" text COLLATE pg_catalog."default",
+    "Descripcion" text COLLATE pg_catalog."default",
+    "idEmpleado" bigint,
+    CONSTRAINT "Titulo_pkey" PRIMARY KEY ("idTitulo")
+);
+
+ALTER TABLE IF EXISTS public."Empleado"
+    ADD CONSTRAINT "idDepartamento_fgkey" FOREIGN KEY ("idDepartamento")
+    REFERENCES public."Departamento" ("idDepartamento") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public."Titulo"
+    ADD CONSTRAINT "idEmpleado_fgkey" FOREIGN KEY ("idEmpleado")
+    REFERENCES public."Empleado" ("idEmpleado") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+END;
