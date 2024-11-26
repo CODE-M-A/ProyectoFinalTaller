@@ -1,0 +1,53 @@
+BEGIN;
+
+
+DROP TABLE IF EXISTS public."Productos";
+
+CREATE TABLE IF NOT EXISTS public."Productos"
+(
+    "idProducto" bigint NOT NULL,
+    "NombreProducto" text COLLATE pg_catalog."default",
+    "Material" text COLLATE pg_catalog."default",
+    "Cantidad" bigint,
+    "Precio" bigint,
+    "idVentas" bigint,
+    CONSTRAINT "Productos_pkey" PRIMARY KEY ("idProducto")
+);
+
+DROP TABLE IF EXISTS public."Usuarios";
+
+CREATE TABLE IF NOT EXISTS public."Usuarios"
+(
+    "idUsuario" bigint NOT NULL,
+    "Nombre" text COLLATE pg_catalog."default",
+    "Apellido" text COLLATE pg_catalog."default",
+    CONSTRAINT "Usuarios_pkey" PRIMARY KEY ("idUsuario")
+);
+
+DROP TABLE IF EXISTS public."Ventas";
+
+CREATE TABLE IF NOT EXISTS public."Ventas"
+(
+    "idVentas" bigint NOT NULL,
+    "DetalleVentas" text COLLATE pg_catalog."default",
+    "Fecha" date,
+    "idUsuario" bigint,
+    CONSTRAINT "Ventas_pkey" PRIMARY KEY ("idVentas")
+);
+
+ALTER TABLE IF EXISTS public."Productos"
+    ADD CONSTRAINT "idVentas_fgkey" FOREIGN KEY ("idVentas")
+    REFERENCES public."Ventas" ("idVentas") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public."Ventas"
+    ADD CONSTRAINT "idUsuario_fgkey" FOREIGN KEY ("idUsuario")
+    REFERENCES public."Usuarios" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+END;
